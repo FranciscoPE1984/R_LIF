@@ -1,0 +1,128 @@
+/* Estilo básico da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+h2 {
+    color: #007bff;
+}
+
+/* Estilo do formulário de filtro */
+.filtro-form {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+select, button {
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #495057;
+}
+
+button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo do botão de impressão */
+.imprimir-button {
+    padding: 10px 15px;
+    background-color: #28a745; /* Cor verde para o botão de impressão */
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-left: 0px; /* Espaçamento à esquerda para separar do botão de filtrar */
+    margin-right: 10px; /* Espaçamento à direita */
+}
+
+
+.imprimir-button:hover {
+    background-color: #218838; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Estilo da carga horária total e botão Voltar */
+.carga-horaria {
+    margin-right: auto; /* Empurra para a esquerda */
+}
+
+.botao-voltar {
+    margin-left: 20px; /* Espaço entre os filtros e o botão Voltar */
+}
+
+.btn-voltar {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+}
+
+.btn-voltar:hover {
+    background-color: #007bff;
+    color: #fff;
+}

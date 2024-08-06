@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bemvindo.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Bem-vindo, {{ nome }}!</h2>
+
+        {% if registro_entrada %}
+            <p>🕗Entrada registrada hoje às {{ registro_entrada['data_hora'].strftime('%H:%M:%S') }}</p>
+        {% else %}
+            <form action="{{ url_for('registrar_entrada') }}" method="post">
+                <button type="submit">Registrar Entrada</button>
+            </form>
+        {% endif %}
+
+        {% if registro_saida %}
+            <p>🕗Saída registrada hoje às {{ registro_saida['data_hora'].strftime('%H:%M:%S') }}</p>
+            <p><strong>Atividades do dia:</strong><br> <br>{{ atividades_do_dia }}</p>
+        {% else %}
+            <form action="{{ url_for('registrar_saida') }}" method="post">
+                <textarea name="atividades" placeholder="Descreva a atividade do dia antes de registrar saída !"></textarea>
+                <br><br>
+                <button type="submit">Registrar Saída</button>
+            </form>
+        {% endif %}
+
+        <!-- Botão para Relatório de Atividades -->
+        <form action="{{ url_for('relatorio') }}" method="get">
+            <button type="submit">Relatório de Atividades</button>
+        </form>
+
+        <a href="{{ url_for('login') }}">Logout</a>
+    </div>
+</body>
+</html>

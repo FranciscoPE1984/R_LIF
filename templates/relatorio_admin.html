@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Atividades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='relatorio_admin.css') }}">
+    <style>
+        th a {
+            text-decoration: none;
+            color: inherit;
+        }
+        th a .arrow {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        .arrow-up::before {
+            content: '↑';
+        }
+        .arrow-down::before {
+            content: '↓';
+        }
+    </style>
+</head>
+<body>
+    <h2>Relatório de Atividades de {{ nome_usuario }}</h2>
+
+    <div class="filter-container">
+        <!-- Formulário de Filtro por Mês -->
+        <form method="get" action="{{ url_for('relatorio_admin') }}">
+            <input type="hidden" name="usuario_id" value="{{ usuario_id }}">
+            <label for="mes">Mês:</label>
+            <select name="mes" id="mes">
+                <option value="">Todos</option>
+                {% set meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'] %}
+                {% for i in range(12) %}
+                    <option value="{{ i + 1 }}" {% if mes and mes|int == (i + 1) %}selected{% endif %}>{{ meses[i] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="ano">Ano:</label>
+            <select name="ano" id="ano">
+                <option value="">Todos</option>
+                {% for i in range(2020, 2031) %}
+                    <option value="{{ i }}" {% if ano and ano|int == i %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="por_pagina">Registros por página:</label>
+            <select name="por_pagina" id="por_pagina" onchange="this.form.submit()">
+                {% for i in [10, 20, 30, 40, 50] %}
+                    <option value="{{ i }}" {% if por_pagina == i %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Filtrar</button>
+        </form>
+
+        <!-- Carga horária total -->
+        <div class="summary-container">
+            <h3>Carga horária total: {{ total_horas }}h {{ total_minutos }}m</h3>
+        </div>
+
+        <!-- Botão de Impressão -->
+        <button onclick="window.print()" class="imprimir-button">Imprimir Relatório</button>
+
+        <!-- Botão de Voltar -->
+        <div class="summary-container">
+            <a href="{{ url_for('admin') }}" class="voltar-button">Voltar</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <a href="{{ url_for('relatorio_admin', usuario_id=usuario_id, mes=mes, ano=ano, por_pagina=por_pagina, ordenacao='asc' if ordenacao == 'desc' else 'desc', exibir_todos_dias=exibir_todos_dias) }}">
+                        Data
+                        {% if ordenacao == 'asc' %}
+                            <span class="arrow arrow-up"></span>
+                        {% else %}
+                            <span class="arrow arrow-down"></span>
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Hora de Entrada</th>
+                <th>Hora de Saída</th>
+                <th>Expediente</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro['data'].strftime('%d-%m-%Y') }}</td>
+                <td>{{ registro['hora_entrada'].strftime('%H:%M:%S') if registro['hora_entrada'] else '-' }}</td>
+                <td>{{ registro['hora_saida'].strftime('%H:%M:%S') if registro['hora_saida'] else '-' }}</td>
+                <td>
+                    {% if registro['hora_entrada'] and registro['hora_saida'] %}
+                        {{ (registro['intervalo'] // 3600)|int }}h {{ ((registro['intervalo'] % 3600) // 60)|int }}m
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ registro['observacao'] if registro['observacao'] else '' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Controles de paginação -->
+    <div class="paginacao">
+        {% if pagina > 1 %}
+            <a href="{{ url_for('relatorio_admin', usuario_id=usuario_id, mes=mes, ano=ano, por_pagina=por_pagina, pagina=pagina-1, ordenacao=ordenacao, exibir_todos_dias=exibir_todos_dias) }}">&laquo; Anterior</a>
+        {% endif %}
+        <span>Página {{ pagina }} de {{ total_paginas }}</span>
+        {% if pagina < total_paginas %}
+            <a href="{{ url_for('relatorio_admin', usuario_id=usuario_id, mes=mes, ano=ano, por_pagina=por_pagina, pagina=pagina+1, ordenacao=ordenacao, exibir_todos_dias=exibir_todos_dias) }}">Próxima &raquo;</a>
+        {% endif %}
+    </div>
+</body>
+</html>

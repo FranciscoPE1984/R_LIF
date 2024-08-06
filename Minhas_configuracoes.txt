@@ -1,0 +1,8 @@
+Navegue até a pasta onde o executável foi gerado (dist).
+Clique com o botão direito no executável (app.exe) e selecione Criar atalho.
+Mover o Atalho para a Pasta de Inicialização:
+
+Pressione Win + R para abrir a caixa de diálogo Executar.
+Digite shell:startup e pressione Enter. Isso abrirá a pasta de inicialização do usuário atual.
+Mova o atalho do executável para a pasta de inicialização.
+Ao fazer isso, o executável será executado automaticamente sempre que o Windows iniciar.

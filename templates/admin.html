@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página do Administrador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Bem-vindo, administrador!</h2>
+
+        <h3>Alunos cadastrados</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>CPF</th>
+                    <th>Nome</th>
+                    <th>Relatório de ponto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.cpf }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td><a href="{{ url_for('relatorio_admin', usuario_id=usuario.id) }}">Ver Relatório</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="/">Voltar para a página inicial</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+USE bancolab;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cpf VARCHAR(14) NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+
+
+
+
+USE bancolab;
+
+CREATE TABLE registros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    tipo_registro ENUM('entrada', 'saida') NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    observacao TEXT,
+    tipo VARCHAR(20),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+
+
